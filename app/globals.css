@@ -1,28 +1,74 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-serif);
+  --font-display: var(--font-display);
   --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 
-  --color-bhukos-bg: #FAF6EE;
-  --color-bhukos-text: #1F1C18;
-  --color-bhukos-accent: #C04A33;
-  --color-bhukos-gold: #E5A93C;
-  --color-bhukos-green: #2D5A46;
-  --color-bhukos-cream-light: #FFFDF9;
+  /* --- Brand Accents (design.md §2) --- */
+  --color-bhukos-tangerine: #FF6B35;
+  --color-bhukos-mango: #FFC857;
+  --color-bhukos-cherry: #EF476F;
+  --color-bhukos-berry: #8338EC;
+  --color-bhukos-green: #80B918;
+
+  /* --- Neutral Canvas & Surfaces --- */
+  --color-bhukos-bg: #FFF9F0;
+  --color-bhukos-surface: #FFFFFF;
+  --color-bhukos-tint: #FEF7FF;
+  --color-bhukos-border: #DED7E4;
+  --color-bhukos-border-soft: #F0EAE1;
+  --color-bhukos-charcoal: #24212A;
+  --color-bhukos-slate: #6B6675;
+
+  /* --- Rarity Tiers --- */
+  --color-rarity-common: #71717A;
+  --color-rarity-rare: #06B6D4;
+  --color-rarity-epic: #8338EC;
+  --color-rarity-legendary: #FFB703;
+
+  /* Back-compat aliases used by older inline classes */
+  --color-bhukos-bg-old: #FFF9F0;
+  --color-bhukos-text: #24212A;
+  --color-bhukos-accent: #FF6B35;
+  --color-bhukos-gold: #FFB703;
+  --color-bhukos-green-old: #80B918;
+  --color-bhukos-cream-light: #FFFFFF;
+}
+
+@layer utilities {
+  .text-display {
+    font-family: var(--font-display), "Syne", system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .text-bhukos-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-bhukos-tangerine via-bhukos-mango to-bhukos-cherry;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .card-shadow {
+    box-shadow: 0 4px 20px -2px rgba(36, 33, 42, 0.05);
+  }
+  .card-shadow-hover {
+    box-shadow: 0 12px 32px -4px rgba(255, 107, 53, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+  .foil-glow {
+    box-shadow: 0 0 24px rgba(255, 183, 3, 0.25), 0 8px 24px -6px rgba(255, 107, 53, 0.25);
+  }
 }
 
 body {
   background-color: var(--color-bhukos-bg);
-  color: var(--color-bhukos-text);
+  color: var(--color-bhukos-charcoal);
   font-family: var(--font-sans);
 }
 
-h1, h2, h3, h4, .serif-heading {
-  font-family: var(--font-serif);
-}
-
-.bhukos-card {
-  background-color: var(--color-bhukos-cream-light);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+h1, h2, h3, h4, .serif-heading, .text-display {
+  font-family: var(--font-display), "Syne", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }

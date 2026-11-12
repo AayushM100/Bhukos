@@ -38,7 +38,7 @@ export const RatingDisplay: React.FC<RatingDisplayProps> = ({
           {starRating.toFixed(1)}
         </span>
       )}
-      <div className="flex gap-0.5 text-amber-500 items-center">
+      <div className="flex gap-0.5 text-[#FFC857] items-center">
         {[1, 2, 3, 4, 5].map((star) => {
           const isFull = starRating >= star;
           const isHalf = starRating === star - 0.5;
@@ -48,9 +48,9 @@ export const RatingDisplay: React.FC<RatingDisplayProps> = ({
               <Star
                 className={`${starSizes[size]} ${
                   isFull
-                    ? 'fill-amber-400 text-amber-400'
+                    ? 'fill-[#FFC857] text-[#FFC857]'
                     : isHalf
-                    ? 'fill-amber-400/50 text-amber-400'
+                    ? 'fill-[#FFC857]/50 text-[#FFC857]'
                     : 'text-black/15'
                 }`}
               />

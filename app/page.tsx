@@ -154,54 +154,62 @@ export default function BhukosApp() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF6EE] text-[#1F1C18] font-sans selection:bg-[#C04A33] selection:text-white flex flex-col">
-      {/* Top Header */}
-      <header className="border-b border-black/10 px-8 py-4 flex items-center justify-between sticky top-0 bg-[#FAF6EE]/90 backdrop-blur-md z-40">
-        <div className="flex items-center gap-12">
-          <h1 className="serif-heading text-3xl font-bold tracking-tighter cursor-pointer" onClick={() => setActiveTab('home')}>
+    <div className="min-h-screen bg-[#FFF9F0] text-[#24212A] font-sans selection:bg-[#FF6B35] selection:text-white flex flex-col">
+      {/* Top Header — frosted glass nav (design.md §5.D) */}
+      <header className="px-6 md:px-10 py-4 flex items-center justify-between sticky top-0 glass border-b border-[#DED7E4] z-40">
+        <div className="flex items-center gap-10">
+          <h1
+            className="text-display text-3xl font-bold tracking-tight cursor-pointer text-bhukos-gradient"
+            onClick={() => setActiveTab('home')}
+          >
             Bhukos
           </h1>
-          <nav className="hidden md:flex items-center gap-8 font-semibold text-sm">
-            <button onClick={() => setActiveTab('home')} className={`hover:text-[#C04A33] transition-colors ${activeTab === 'home' ? 'text-[#C04A33] underline underline-offset-8 font-bold' : ''}`}>Home</button>
-            <button onClick={() => setActiveTab('discover')} className={`hover:text-[#C04A33] transition-colors ${activeTab === 'discover' ? 'text-[#C04A33] underline underline-offset-8 font-bold' : ''}`}>Discover</button>
-            <button onClick={() => handleProtectedAction(() => setActiveTab('wishlist'))} className={`hover:text-[#C04A33] transition-colors ${activeTab === 'wishlist' ? 'text-[#C04A33] underline underline-offset-8 font-bold' : ''}`}>Wishlist</button>
-            <button onClick={() => handleProtectedAction(() => setActiveTab('binder'))} className={`hover:text-[#C04A33] transition-colors ${activeTab === 'binder' ? 'text-[#C04A33] underline underline-offset-8 font-bold' : ''}`}>My collection</button>
-            <button onClick={() => handleProtectedAction(() => setActiveTab('log'))} className={`hover:text-[#C04A33] transition-colors ${activeTab === 'log' ? 'text-[#C04A33] underline underline-offset-8 font-bold' : ''}`}>Log a taste</button>
+          <nav className="hidden md:flex items-center gap-7 font-semibold text-sm text-[#6B6675]">
+            <button onClick={() => setActiveTab('home')} className={`hover:text-[#FF6B35] transition-colors ${activeTab === 'home' ? 'text-[#FF6B35] font-bold' : ''}`}>Home</button>
+            <button onClick={() => setActiveTab('discover')} className={`hover:text-[#FF6B35] transition-colors ${activeTab === 'discover' ? 'text-[#FF6B35] font-bold' : ''}`}>Discover</button>
+            <button onClick={() => handleProtectedAction(() => setActiveTab('wishlist'))} className={`hover:text-[#FF6B35] transition-colors ${activeTab === 'wishlist' ? 'text-[#FF6B35] font-bold' : ''}`}>Wishlist</button>
+            <button onClick={() => handleProtectedAction(() => setActiveTab('binder'))} className={`hover:text-[#FF6B35] transition-colors ${activeTab === 'binder' ? 'text-[#FF6B35] font-bold' : ''}`}>My collection</button>
+            <button onClick={() => handleProtectedAction(() => setActiveTab('log'))} className={`hover:text-[#FF6B35] transition-colors ${activeTab === 'log' ? 'text-[#FF6B35] font-bold' : ''}`}>Log a taste</button>
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden lg:flex items-center bg-[#FFFDF9] border border-black/10 rounded-full px-4 py-2 w-72 shadow-sm">
-            <Search className="w-4 h-4 text-black/40 mr-2" />
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center bg-white/80 border border-[#DED7E4] rounded-full px-4 py-2 w-72 shadow-sm">
+            <Search className="w-4 h-4 text-[#6B6675] mr-2" />
             <input
               type="text"
               placeholder="Search pantry..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-transparent text-sm w-full outline-none text-[#1F1C18] placeholder-black/40 font-medium"
+              className="bg-transparent text-sm w-full outline-none text-[#24212A] placeholder:text-[#6B6675] font-medium"
             />
           </div>
 
           <button
             onClick={() => handleProtectedAction(() => setIsSubmitModalOpen(true))}
-            className="bg-[#FFFDF9] border border-black/10 text-[#1F1C18] px-4 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-black/5 transition-all shadow-sm"
+            className="hidden sm:flex items-center gap-2 bg-white border border-[#DED7E4] text-[#24212A] px-4 py-2.5 rounded-full text-sm font-bold hover:bg-[#FEF7FF] transition-all shadow-sm"
           >
-            <Plus className="w-4 h-4 text-[#C04A33]" /> Submit a snack
+            <Plus className="w-4 h-4 text-[#FF6B35]" /> Submit a snack
           </button>
 
           <button
             onClick={() => handleProtectedAction(() => setActiveTab('log'))}
-            className="bg-[#C04A33] text-white px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-[#a93e28] shadow-md transition-all"
+            className="bg-gradient-to-r from-[#FF6B35] via-[#FF8C42] to-[#FFC857] text-white px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_12px_32px_-4px_rgba(255,107,53,0.4)] transition-all shadow-md"
           >
             <Plus className="w-4 h-4" /> Log a taste
           </button>
 
           {session ? (
-            <button onClick={() => setActiveTab('profile')} className="w-10 h-10 rounded-full overflow-hidden border-2 border-black/25 hover:scale-105 transition-transform shadow-sm">
-              <img src={profile?.avatar_url || session.user.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"} alt="Profile" className="w-full h-full object-cover" />
+            <button onClick={() => setActiveTab('profile')} className="flex items-center gap-2 pl-1.5 pr-3 py-1 rounded-full bg-white border border-[#DED7E4] hover:shadow-md transition-all">
+              <span className="bg-gradient-to-r from-[#8338EC] to-[#D946EF] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                LVL 08
+              </span>
+              <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-[#FF6B35]/40">
+                <img src={profile?.avatar_url || session.user.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"} alt="Profile" className="w-full h-full object-cover" />
+              </div>
             </button>
           ) : (
-            <button onClick={() => setIsLoginModalOpen(true)} className="bg-[#1F1C18] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-black transition-all shadow-sm">
+            <button onClick={() => setIsLoginModalOpen(true)} className="bg-[#24212A] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#FF6B35] transition-all shadow-sm">
               Sign in
             </button>
           )}
@@ -216,24 +224,24 @@ export default function BhukosApp() {
           <>
             {/* Greeting & Streak Header */}
             <div className="space-y-4">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C04A33]">
-                {formattedDate || 'Today'} / Your Daily Flavour
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6B35]">
+                {formattedDate || ‘Today’} / Your Daily Flavour
               </span>
-              <h2 className="serif-heading text-5xl font-bold tracking-tight">
-                Good afternoon, {profile?.full_name?.split(' ')[0] || session?.user?.user_metadata?.full_name?.split(' ')[0] || 'Foodie'}.
+              <h2 className="text-display text-5xl font-bold tracking-tight">
+                Good afternoon, {profile?.full_name?.split(‘ ‘)[0] || session?.user?.user_metadata?.full_name?.split(‘ ‘)[0] || ‘Foodie’}.
               </h2>
-              <p className="text-lg opacity-80">
+              <p className="text-lg text-[#6B6675]">
                 Something familiar. Something you haven’t tried. Something worth a card.
               </p>
 
               {/* Streak Badge */}
-              <div className="inline-flex items-center gap-4 bg-[#FFFDF9] border border-black/10 px-6 py-3 rounded-2xl shadow-sm">
-                <div className="bg-[#C04A33] text-white font-bold text-lg px-3.5 py-1 rounded-xl">
+              <div className="inline-flex items-center gap-4 bg-white border border-[#DED7E4] px-6 py-3 rounded-2xl shadow-sm">
+                <div className="bg-gradient-to-r from-[#FF6B35] to-[#EF476F] text-white font-bold text-lg px-3.5 py-1 rounded-xl">
                   {streak}
                 </div>
                 <div>
-                  <div className="font-bold text-sm tracking-wide">DAY TASTE STREAK</div>
-                  <div className="text-xs opacity-70">Keep the streak. Try a new flavour today →</div>
+                  <div className="font-bold text-sm tracking-wide text-[#24212A]">DAY TASTE STREAK</div>
+                  <div className="text-xs text-[#6B6675]">Keep the streak. Try a new flavour today →</div>
                 </div>
               </div>
             </div>
@@ -242,10 +250,10 @@ export default function BhukosApp() {
             <section className="space-y-6">
               <div className="flex justify-between items-end">
                 <div>
-                  <h3 className="serif-heading text-3xl font-bold">Featured Pantry</h3>
-                  <p className="text-sm opacity-60 mt-1">Browse India's top packaged snacks and beverages.</p>
+                  <h3 className="text-display text-3xl font-bold">Featured Pantry</h3>
+                  <p className="text-sm text-[#6B6675] mt-1">Browse India’s top packaged snacks and beverages.</p>
                 </div>
-                <span onClick={() => setActiveTab('discover')} className="text-sm font-bold text-[#C04A33] cursor-pointer hover:underline flex items-center gap-1">
+                <span onClick={() => setActiveTab(‘discover’)} className="text-sm font-bold text-[#FF6B35] cursor-pointer hover:underline flex items-center gap-1">
                   Explore all <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -262,10 +270,10 @@ export default function BhukosApp() {
             </section>
 
             {/* Food Trivia Box */}
-            <section className="bg-[#FFFDF9] border border-black/10 rounded-3xl p-8 shadow-sm space-y-3">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C04A33]">A Little Food Lore</span>
-              <p className="serif-heading text-2xl italic">"{mockTrivia.fact}"</p>
-              <p className="text-xs opacity-70">{mockTrivia.source}</p>
+            <section className="bg-white border border-[#DED7E4] rounded-3xl p-8 shadow-sm space-y-3">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6B35]">A Little Food Lore</span>
+              <p className="text-display text-2xl italic text-[#24212A]">"{mockTrivia.fact}"</p>
+              <p className="text-xs text-[#6B6675]">{mockTrivia.source}</p>
             </section>
           </>
         )}
@@ -274,7 +282,7 @@ export default function BhukosApp() {
         {activeTab === 'discover' && (
           <div className="space-y-6">
             <div>
-              <h2 className="serif-heading text-4xl font-bold">Discover Pantry</h2>
+              <h2 className="text-display text-4xl font-bold">Discover Pantry</h2>
               <p className="opacity-80 mt-1">Explore India's packaged delights across all vibrant brands and flavours.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
@@ -300,7 +308,7 @@ export default function BhukosApp() {
         {activeTab === 'wishlist' && (
           <div className="space-y-6">
             <div>
-              <h2 className="serif-heading text-4xl font-bold">My Wishlist</h2>
+              <h2 className="text-display text-4xl font-bold">My Wishlist</h2>
               <p className="opacity-80 mt-1">Flavours waiting to be tasted and added to your collection.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
@@ -313,7 +321,7 @@ export default function BhukosApp() {
                   <p className="opacity-60 text-base">Your wishlist is empty.</p>
                   <button
                     onClick={() => setActiveTab('discover')}
-                    className="bg-[#C04A33] text-white px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#a93e28]"
+                    className="bg-[#FF6B35] text-white px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#FF6B35]"
                   >
                     Discover Snacks to Save
                   </button>
@@ -327,7 +335,7 @@ export default function BhukosApp() {
         {activeTab === 'binder' && (
           <div className="space-y-6">
             <div>
-              <h2 className="serif-heading text-4xl font-bold">My Collection</h2>
+              <h2 className="text-display text-4xl font-bold">My Collection</h2>
               <p className="opacity-80 mt-1">Products you have logged and reviewed in your diary history.</p>
             </div>
             {userLogs.length > 0 ? (
@@ -344,7 +352,7 @@ export default function BhukosApp() {
                         consumedDate={log.created_at}
                       />
                       {log.review && (
-                        <div className="bg-[#FFFDF9] border border-black/5 p-3 rounded-2xl text-xs italic text-black/70 line-clamp-2">
+                        <div className="bg-white border border-black/5 p-3 rounded-2xl text-xs italic text-black/70 line-clamp-2">
                           "{log.review}"
                         </div>
                       )}
@@ -357,7 +365,7 @@ export default function BhukosApp() {
                 <p className="opacity-60 text-base">You haven't logged any tastes yet.</p>
                 <button
                   onClick={() => setActiveTab('log')}
-                  className="bg-[#C04A33] text-white px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#a93e28]"
+                  className="bg-[#FF6B35] text-white px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#FF6B35]"
                 >
                   Log Your First Taste
                 </button>
@@ -369,13 +377,13 @@ export default function BhukosApp() {
         {/* PROFILE TAB */}
         {activeTab === 'profile' && (
           <div className="space-y-8 max-w-3xl mx-auto w-full">
-            <div className="bg-[#FFFDF9] border border-black/10 rounded-3xl p-8 flex flex-col sm:flex-row items-center gap-8 shadow-sm relative">
-              <img src={profile?.avatar_url || session?.user?.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300"} alt="User" className="w-28 h-28 rounded-full object-cover border-4 border-[#C04A33]" />
+            <div className="bg-white border border-[#DED7E4] rounded-3xl p-8 flex flex-col sm:flex-row items-center gap-8 shadow-sm relative">
+              <img src={profile?.avatar_url || session?.user?.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300"} alt="User" className="w-28 h-28 rounded-full object-cover border-4 border-[#FF6B35]" />
               <div className="space-y-2 text-center sm:text-left flex-1">
                 <div className="flex items-center gap-3">
-                  <h2 className="serif-heading text-4xl font-bold">{profile?.full_name || session?.user?.user_metadata?.full_name || 'Foodie Explorer'}</h2>
-                  <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <Award className="w-3 h-3 text-amber-600" /> Contributor
+                  <h2 className="text-display text-4xl font-bold">{profile?.full_name || session?.user?.user_metadata?.full_name || 'Foodie Explorer'}</h2>
+                  <span className="bg-[#FFC857]/15 text-[#B8860B] border border-[#FFC857]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <Award className="w-3 h-3 text-[#FFC857]" /> Contributor
                   </span>
                 </div>
                 <p className="text-sm opacity-70">@{profile?.username || session?.user?.email?.split('@')[0] || 'foodie'} • India</p>
@@ -388,7 +396,7 @@ export default function BhukosApp() {
             </div>
 
             <div className="flex justify-between items-center">
-              <h3 className="serif-heading text-2xl font-bold">Account Settings</h3>
+              <h3 className="text-display text-2xl font-bold">Account Settings</h3>
               <button onClick={() => signOut()} className="bg-red-500/10 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 hover:bg-red-500/20 transition-colors">
                 <LogOut className="w-4 h-4" /> Sign out
               </button>
@@ -399,13 +407,13 @@ export default function BhukosApp() {
         {/* FOOD DETAIL MODAL */}
         {selectedFood && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-[#FAF6EE] border border-black/10 rounded-[3rem] max-w-4xl w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <div className="bg-[#FFF9F0] border border-[#DED7E4] rounded-[3rem] max-w-4xl w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
               <button onClick={() => setSelectedFood(null)} className="absolute top-6 right-6 font-bold text-lg w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors">×</button>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 {/* Left: Poster View */}
                 <div className="flex justify-center">
-                  <div className="relative aspect-[3/4] w-full max-w-[300px] rounded-[2rem] overflow-hidden shadow-xl border border-black/10">
+                  <div className="relative aspect-[3/4] w-full max-w-[300px] rounded-[2rem] overflow-hidden shadow-xl border border-[#DED7E4]">
                     <VibrantFoodPoster foodId={selectedFood.id} className="w-full h-full object-cover" />
                   </div>
                 </div>
@@ -413,26 +421,26 @@ export default function BhukosApp() {
                 {/* Right: Details & Community Rating */}
                 <div className="space-y-6 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#C04A33]">{selectedFood.category}</span>
-                    <h2 className="serif-heading text-4xl font-bold mt-1">{selectedFood.name}</h2>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF6B35]">{selectedFood.category}</span>
+                    <h2 className="text-display text-4xl font-bold mt-1">{selectedFood.name}</h2>
                     <p className="text-xs font-bold text-black/50 uppercase tracking-wider mt-1">{selectedFood.brand}</p>
                     <p className="text-sm opacity-80 mt-4 leading-relaxed">{selectedFood.description}</p>
 
                     {/* Community Rating (Centralized RatingDisplay) */}
-                    <div className="flex items-center gap-4 mt-6 bg-[#FFFDF9] p-4 rounded-2xl border border-black/10">
+                    <div className="flex items-center gap-4 mt-6 bg-white p-4 rounded-2xl border border-[#DED7E4]">
                       <RatingDisplay rating={9} isDbScale={true} size="lg" />
                       <span className="text-xs opacity-60">Community average score</span>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-4 pt-4 border-t border-black/10">
+                  <div className="flex gap-4 pt-4 border-t border-[#DED7E4]">
                     <button
                       onClick={() => handleProtectedAction(() => {
                         setSelectedFood(null);
                         setActiveTab('log');
                       })}
-                      className="flex-1 bg-[#C04A33] text-white py-3.5 rounded-2xl font-bold hover:bg-[#a93e28] transition-colors shadow-md text-sm"
+                      className="flex-1 bg-[#FF6B35] text-white py-3.5 rounded-2xl font-bold hover:bg-[#FF6B35] transition-colors shadow-md text-sm"
                     >
                       + Log a taste
                     </button>
@@ -440,7 +448,7 @@ export default function BhukosApp() {
                       onClick={() => handleProtectedAction(() => handleWishlistToggle(selectedFood.id))}
                       className={`px-6 py-3.5 rounded-2xl border font-bold text-sm transition-colors ${
                         wishlistIds.includes(selectedFood.id)
-                          ? 'bg-amber-400 text-black border-transparent'
+                          ? 'bg-[#FFC857] text-black border-transparent'
                           : 'border-black/20 hover:bg-black/5'
                       }`}
                     >

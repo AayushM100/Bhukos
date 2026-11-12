@@ -17,7 +17,7 @@ export const VibrantFoodPoster: React.FC<PosterProps> = ({ foodId, className = "
 
           {/* Top Brand Logo */}
           <div className="z-10 bg-white/90 backdrop-blur-md px-4 py-1 rounded-full shadow-md">
-            <span className="font-extrabold tracking-wider text-xl text-[#E6005C] font-serif">Maaza</span>
+            <span className="font-extrabold tracking-wider text-xl text-[#E6005C] font-display">Maaza</span>
           </div>
 
           {/* Central Artwork */}
@@ -88,7 +88,7 @@ export const VibrantFoodPoster: React.FC<PosterProps> = ({ foodId, className = "
 
           {/* Parle-G Header Banner */}
           <div className="z-10 bg-[#D50000] text-white px-6 py-1 rounded-xl shadow-lg border-2 border-yellow-300">
-            <span className="font-extrabold text-lg tracking-widest font-serif">Parle-G</span>
+            <span className="font-extrabold text-lg tracking-widest font-display">Parle-G</span>
           </div>
 
           {/* Parle Girl & Biscuit Artwork */}
@@ -145,7 +145,7 @@ export const VibrantFoodPoster: React.FC<PosterProps> = ({ foodId, className = "
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.3)_0%,transparent_70%)]" />
 
           <div className="z-10 bg-amber-400 text-black px-4 py-1 rounded-full shadow-lg border border-amber-200">
-            <span className="font-extrabold text-sm tracking-widest font-serif">OLD MONK</span>
+            <span className="font-extrabold text-sm tracking-widest font-display">OLD MONK</span>
           </div>
 
           <div className="z-10 my-auto">
