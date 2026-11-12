@@ -28,7 +28,7 @@ export const RatingDisplay: React.FC<RatingDisplayProps> = ({
   const textSizes = {
     sm: 'text-xs',
     md: 'text-sm font-bold',
-    lg: 'text-2xl font-bold serif-heading',
+    lg: 'text-2xl font-bold text-display',
   };
 
   return (

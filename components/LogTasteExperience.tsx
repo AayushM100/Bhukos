@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sparkles, Star, Calendar, Bookmark, Check, X, Search, ChevronDown } from 'lucide-react';
 import { FoodItem } from '@/types';
 import { VibrantFoodPoster } from '@/components/cards/VibrantFoodPoster';
@@ -51,12 +51,24 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
     setIsSubmitting(false);
   };
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Element;
+      if (!target.closest('.dropdown-container')) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 animate-in fade-in duration-300">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C04A33]">Letterboxd-Inspired Diary</span>
-          <h2 className="serif-heading text-4xl font-bold mt-1">Log a taste experience</h2>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6B35]">Letterboxd-Inspired Diary</span>
+          <h2 className="text-display text-4xl font-bold mt-1">Log a taste experience</h2>
         </div>
         {onCancel && (
           <button
@@ -72,25 +84,25 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
         {/* Left Column: Product Poster & Dynamic Search */}
         <div className="lg:col-span-5 space-y-6">
           {/* Dynamic Product Selector */}
-          <div className="relative">
+          <div className="relative dropdown-container">
             <label className="text-[10px] font-bold uppercase tracking-wider opacity-60 mb-2 block">Select Product</label>
             <div
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full bg-[#FFFDF9] border border-black/10 rounded-2xl p-4 text-sm font-semibold flex items-center justify-between cursor-pointer shadow-sm hover:border-black/20 transition-all"
+              className="w-full bg-white border border-[#DED7E4] rounded-2xl p-4 text-sm font-semibold flex items-center justify-between cursor-pointer shadow-sm hover:border-[#FF6B35]/40 transition-all"
             >
-              <span>{selectedFood ? `${selectedFood.name} (${selectedFood.brand})` : 'Search pantry...'}</span>
+              <span className="truncate">{selectedFood ? `${selectedFood.name} (${selectedFood.brand})` : 'Search pantry...'}</span>
               <ChevronDown className="w-4 h-4 opacity-50" />
             </div>
 
             {isDropdownOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-[#FFFDF9] border border-black/10 rounded-2xl shadow-xl z-30 overflow-hidden max-h-80 flex flex-col">
-                <div className="p-3 border-b border-black/5">
-                  <div className="flex items-center bg-[#FAF6EE] rounded-xl px-3 py-2 border border-black/5">
-                    <Search className="w-4 h-4 text-black/40 mr-2" />
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#DED7E4] rounded-2xl shadow-xl z-30 overflow-hidden max-h-80 flex flex-col">
+                <div className="p-3 border-b border-[#F0EAE1]">
+                  <div className="flex items-center bg-[#FFF9F0] rounded-xl px-3 py-2 border border-[#F0EAE1]">
+                    <Search className="w-4 h-4 text-[#6B6675]/60 mr-2" />
                     <input
                       type="text"
                       placeholder="Type product or brand..."
-                      className="bg-transparent text-xs w-full outline-none font-medium"
+                      className="bg-transparent text-xs w-full outline-none font-medium text-[#24212A]"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       autoFocus
@@ -105,13 +117,13 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
                         setSelectedFood(f);
                         setIsDropdownOpen(false);
                       }}
-                      className="px-4 py-3 hover:bg-black/5 cursor-pointer flex items-center gap-3 border-b border-black/5 last:border-0"
+                      className="px-4 py-3 hover:bg-[#FEF7FF] cursor-pointer flex items-center gap-3 border-b border-[#F0EAE1] last:border-0"
                     >
                       <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 bg-black/5">
                         <VibrantFoodPoster foodId={f.id} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-sm truncate">{f.name}</div>
+                        <div className="font-bold text-sm text-[#24212A] truncate">{f.name}</div>
                         <div className="text-[10px] opacity-60 uppercase">{f.brand} • {f.category}</div>
                       </div>
                     </div>
@@ -123,14 +135,14 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
 
           {/* Selected Product Poster */}
           {selectedFood && (
-            <div className="relative aspect-[3/4] w-full rounded-[2.5rem] overflow-hidden shadow-xl border border-black/10 bg-white group">
+            <div className="relative aspect-[3/4] w-full rounded-[2.5rem] overflow-hidden shadow-xl border border-[#DED7E4] bg-white">
               <VibrantFoodPoster foodId={selectedFood.id} className="w-full h-full object-cover" />
-              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#C04A33] shadow-md">
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#FF6B35] shadow-md">
                 {selectedFood.rarity}
               </div>
               <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md text-white p-4 rounded-2xl border border-white/10 space-y-1">
                 <div className="text-[10px] uppercase tracking-widest font-bold opacity-80">{selectedFood.brand}</div>
-                <div className="serif-heading font-bold text-xl leading-tight">{selectedFood.name}</div>
+                <div className="text-display font-bold text-xl leading-tight">{selectedFood.name}</div>
               </div>
             </div>
           )}
@@ -140,10 +152,10 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
             <button
               type="button"
               onClick={() => onWishlistToggle(selectedFood.id)}
-              className={`w-full py-3.5 px-6 rounded-2xl border font-bold text-sm flex items-center justify-center gap-2 transition-colors ${
+              className={`w-full py-3.5 px-6 rounded-2xl border font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                 isWishlisted
-                  ? 'bg-amber-400 text-black border-transparent shadow-md'
-                  : 'bg-[#FFFDF9] border-black/10 hover:bg-black/5'
+                  ? 'bg-[#FFC857] text-[#24212A] border-transparent shadow-md'
+                  : 'bg-white border-[#DED7E4] hover:bg-[#FEF7FF]'
               }`}
             >
               <Bookmark className="w-4 h-4" />
@@ -153,17 +165,17 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
         </div>
 
         {/* Right Column: Rating, Consumed Date, Review, Save */}
-        <div className="lg:col-span-7 space-y-8 bg-[#FFFDF9] border border-black/10 rounded-[3rem] p-8 lg:p-10 shadow-sm">
+        <div className="lg:col-span-7 space-y-8 bg-white border border-[#DED7E4] rounded-[3rem] p-8 lg:p-10 shadow-sm">
           {/* Consumed Date */}
           <div className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#C04A33]" /> Consumed on
+              <Calendar className="w-3.5 h-3.5 text-[#FF6B35]" /> Consumed on
             </label>
             <input
               type="date"
               value={consumedDate}
               onChange={(e) => setConsumedDate(e.target.value)}
-              className="w-full bg-[#FAF6EE] border border-black/10 rounded-2xl p-4 text-sm font-semibold outline-none focus:border-[#C04A33] transition-colors"
+              className="w-full bg-[#FFF9F0] border border-[#DED7E4] rounded-2xl p-4 text-sm font-semibold outline-none focus:border-[#FF6B35] transition-colors"
             />
           </div>
 
@@ -171,10 +183,10 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
           <div className="space-y-3">
             <div className="flex justify-between items-center">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">Your Rating</label>
-              <span className="serif-heading font-bold text-2xl text-[#C04A33]">{rating.toFixed(1)} ★</span>
+              <span className="text-display font-bold text-2xl text-[#FF6B35]">{rating.toFixed(1)} ★</span>
             </div>
 
-            <div className="flex gap-2 text-amber-500 items-center bg-[#FAF6EE] p-4 rounded-2xl border border-black/10 justify-between">
+            <div className="flex gap-2 text-[#FFC857] items-center bg-[#FFF9F0] p-4 rounded-2xl border border-[#DED7E4] justify-between">
               {[1, 2, 3, 4, 5].map((star) => {
                 const activeVal = hoverRating || rating;
                 const isFull = activeVal >= star;
@@ -197,10 +209,10 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
                     <Star
                       className={`w-7 h-7 transition-transform ${
                         isFull
-                          ? 'fill-amber-400 text-amber-400 scale-105'
+                          ? 'fill-[#FFC857] text-[#FFC857] scale-105'
                           : isHalf
-                          ? 'fill-amber-400/50 text-amber-400 scale-105'
-                          : 'text-black/15'
+                          ? 'fill-[#FFC857]/50 text-[#FFC857] scale-105'
+                          : 'text-[#6B6675]/30'
                       }`}
                     />
                   </div>
@@ -217,7 +229,7 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
               value={review}
               onChange={(e) => setReview(e.target.value)}
               placeholder="How was it? Describe the flavour, texture, aroma and your overall experience..."
-              className="w-full bg-[#FAF6EE] border border-black/10 rounded-2xl p-4 text-sm outline-none focus:border-[#C04A33] resize-none transition-colors leading-relaxed font-medium"
+              className="w-full bg-[#FFF9F0] border border-[#DED7E4] rounded-2xl p-4 text-sm outline-none focus:border-[#FF6B35] resize-none transition-colors leading-relaxed font-medium text-[#24212A]"
             />
           </div>
 
@@ -225,7 +237,7 @@ export const LogTasteExperience: React.FC<LogTasteExperienceProps> = ({
           <button
             type="submit"
             disabled={isSubmitting || !selectedFood}
-            className="w-full bg-[#C04A33] text-white py-4 rounded-2xl font-bold hover:bg-[#a93e28] transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 text-base"
+            className="w-full bg-[#FF6B35] text-white py-4 rounded-2xl font-bold hover:bg-[#FF6B35] transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 text-base"
           >
             {isSubmitting ? 'Saving to Diary...' : 'Save Taste Log'}
           </button>

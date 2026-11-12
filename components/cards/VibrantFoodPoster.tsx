@@ -144,7 +144,7 @@ export const VibrantFoodPoster: React.FC<PosterProps> = ({ foodId, className = "
         <div className={`relative overflow-hidden bg-gradient-to-br from-[#311B92] via-[#B71C1C] to-[#FF6F00] flex flex-col items-center justify-between p-4 shadow-inner ${className}`}>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.3)_0%,transparent_70%)]" />
 
-          <div className="z-10 bg-amber-400 text-black px-4 py-1 rounded-full shadow-lg border border-amber-200">
+          <div className="z-10 bg-[#FFC857] text-[#24212A] px-4 py-1 rounded-full shadow-lg border border-[#FFD54F]">
             <span className="font-extrabold text-sm tracking-widest font-display">OLD MONK</span>
           </div>
 
@@ -156,11 +156,11 @@ export const VibrantFoodPoster: React.FC<PosterProps> = ({ foodId, className = "
               <path d="M37 45 L63 45 L63 80 C63 83 58 85 50 85 C42 85 37 83 37 80 Z" fill="#FF8F00" opacity="0.85" />
               {/* Gold Label */}
               <rect x="40" y="50" width="20" height="22" rx="3" fill="#FFD54F" />
-              <text x="50" y="64" textAnchor="middle" fill="#3E2723" fontSize="8" fontWeight="bold" fontFamily="serif">7 YRS</text>
+              <text x="50" y="64" textAnchor="middle" fill="#3E2723" fontSize="8" fontWeight="bold" fontFamily="var(--font-display)">7 YRS</text>
             </svg>
           </div>
 
-          <div className="z-10 bg-black/40 backdrop-blur-sm text-amber-300 px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-widest">
+          <div className="z-10 bg-black/40 backdrop-blur-sm text-[#FFD54F] px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-widest">
             Legendary Rum
           </div>
         </div>

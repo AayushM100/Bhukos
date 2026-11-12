@@ -155,7 +155,7 @@ export default function BhukosApp() {
 
   return (
     <div className="min-h-screen bg-[#FFF9F0] text-[#24212A] font-sans selection:bg-[#FF6B35] selection:text-white flex flex-col">
-      {/* Top Header — frosted glass nav (design.md §5.D) */}
+      {/* Top Header - frosted glass nav (design.md §5.D) */}
       <header className="px-6 md:px-10 py-4 flex items-center justify-between sticky top-0 glass border-b border-[#DED7E4] z-40">
         <div className="flex items-center gap-10">
           <h1
@@ -225,13 +225,13 @@ export default function BhukosApp() {
             {/* Greeting & Streak Header */}
             <div className="space-y-4">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6B35]">
-                {formattedDate || ‘Today’} / Your Daily Flavour
+                {formattedDate || 'Today'} / Your Daily Flavour
               </span>
               <h2 className="text-display text-5xl font-bold tracking-tight">
-                Good afternoon, {profile?.full_name?.split(‘ ‘)[0] || session?.user?.user_metadata?.full_name?.split(‘ ‘)[0] || ‘Foodie’}.
+                Good afternoon, {profile?.full_name?.split(' ')[0] || session?.user?.user_metadata?.full_name?.split(' ')[0] || 'Foodie'}.
               </h2>
               <p className="text-lg text-[#6B6675]">
-                Something familiar. Something you haven’t tried. Something worth a card.
+                Something familiar. Something you haven't tried. Something worth a card.
               </p>
 
               {/* Streak Badge */}
@@ -251,9 +251,9 @@ export default function BhukosApp() {
               <div className="flex justify-between items-end">
                 <div>
                   <h3 className="text-display text-3xl font-bold">Featured Pantry</h3>
-                  <p className="text-sm text-[#6B6675] mt-1">Browse India’s top packaged snacks and beverages.</p>
+                  <p className="text-sm text-[#6B6675] mt-1">Browse India's top packaged snacks and beverages.</p>
                 </div>
-                <span onClick={() => setActiveTab(‘discover’)} className="text-sm font-bold text-[#FF6B35] cursor-pointer hover:underline flex items-center gap-1">
+                <span onClick={() => setActiveTab('discover')} className="text-sm font-bold text-[#FF6B35] cursor-pointer hover:underline flex items-center gap-1">
                   Explore all <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -352,7 +352,7 @@ export default function BhukosApp() {
                         consumedDate={log.created_at}
                       />
                       {log.review && (
-                        <div className="bg-white border border-black/5 p-3 rounded-2xl text-xs italic text-black/70 line-clamp-2">
+                        <div className="bg-white border border-[#F0EAE1] p-3 rounded-2xl text-xs italic text-[#6B6675]/70 line-clamp-2">
                           "{log.review}"
                         </div>
                       )}
@@ -397,7 +397,7 @@ export default function BhukosApp() {
 
             <div className="flex justify-between items-center">
               <h3 className="text-display text-2xl font-bold">Account Settings</h3>
-              <button onClick={() => signOut()} className="bg-red-500/10 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 hover:bg-red-500/20 transition-colors">
+              <button onClick={() => signOut()} className="bg-[#EF476F]/15 text-[#EF476F] px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 hover:bg-[#EF476F]/25 transition-colors">
                 <LogOut className="w-4 h-4" /> Sign out
               </button>
             </div>
@@ -406,9 +406,9 @@ export default function BhukosApp() {
 
         {/* FOOD DETAIL MODAL */}
         {selectedFood && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-[#FFF9F0] border border-[#DED7E4] rounded-[3rem] max-w-4xl w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-              <button onClick={() => setSelectedFood(null)} className="absolute top-6 right-6 font-bold text-lg w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors">×</button>
+              <button onClick={() => setSelectedFood(null)} className="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors">×</button>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 {/* Left: Poster View */}
@@ -423,7 +423,7 @@ export default function BhukosApp() {
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF6B35]">{selectedFood.category}</span>
                     <h2 className="text-display text-4xl font-bold mt-1">{selectedFood.name}</h2>
-                    <p className="text-xs font-bold text-black/50 uppercase tracking-wider mt-1">{selectedFood.brand}</p>
+                    <p className="text-xs font-bold text-[#6B6675] uppercase tracking-wider mt-1">{selectedFood.brand}</p>
                     <p className="text-sm opacity-80 mt-4 leading-relaxed">{selectedFood.description}</p>
 
                     {/* Community Rating (Centralized RatingDisplay) */}
@@ -448,8 +448,8 @@ export default function BhukosApp() {
                       onClick={() => handleProtectedAction(() => handleWishlistToggle(selectedFood.id))}
                       className={`px-6 py-3.5 rounded-2xl border font-bold text-sm transition-colors ${
                         wishlistIds.includes(selectedFood.id)
-                          ? 'bg-[#FFC857] text-black border-transparent'
-                          : 'border-black/20 hover:bg-black/5'
+                          ? 'bg-[#FFC857] text-[#24212A] border-transparent shadow-md'
+                          : 'bg-white border-[#DED7E4] hover:bg-[#FEF7FF]'
                       }`}
                     >
                       {wishlistIds.includes(selectedFood.id) ? 'Wishlisted ✓' : '+ Wishlist'}

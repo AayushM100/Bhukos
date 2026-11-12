@@ -43,7 +43,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-      <div className="bg-[#FAF6EE] border border-black/10 rounded-[32px] max-w-xl w-full p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <div className="bg-[#FFF9F0] border border-[#DED7E4] rounded-[32px] max-w-xl w-full p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors"
@@ -52,9 +52,9 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
         </button>
 
         <div className="mb-8">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C04A33]">Community Contribution</span>
-          <h2 className="serif-heading text-4xl font-bold mt-2">Submit a snack</h2>
-          <p className="text-sm opacity-70 mt-1">Found something missing in our pantry? Help the club grow.</p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6B35]">Community Contribution</span>
+          <h2 className="text-display text-4xl font-bold mt-2">Submit a snack</h2>
+          <p className="text-sm text-[#6B6675] mt-1">Found something missing in our pantry? Help the club grow.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -65,7 +65,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
                 required
                 type="text"
                 placeholder="e.g. Magic Masala"
-                className="w-full bg-[#FFFDF9] border border-black/10 rounded-2xl p-4 text-sm outline-none focus:border-[#C04A33] transition-colors"
+                className="w-full bg-white border border-[#DED7E4] rounded-2xl p-4 text-sm outline-none focus:border-[#FF6B35] transition-colors"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
@@ -76,7 +76,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
                 required
                 type="text"
                 placeholder="e.g. Lay's"
-                className="w-full bg-[#FFFDF9] border border-black/10 rounded-2xl p-4 text-sm outline-none focus:border-[#C04A33] transition-colors"
+                className="w-full bg-white border border-[#DED7E4] rounded-2xl p-4 text-sm outline-none focus:border-[#FF6B35] transition-colors"
                 value={formData.brand}
                 onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
               />
@@ -86,7 +86,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
           <div className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-wider opacity-60 ml-1">Category</label>
             <select
-              className="w-full bg-[#FFFDF9] border border-black/10 rounded-2xl p-4 text-sm outline-none focus:border-[#C04A33] appearance-none transition-colors"
+              className="w-full bg-white border border-[#DED7E4] rounded-2xl p-4 text-sm outline-none focus:border-[#FF6B35] appearance-none transition-colors"
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
             >
@@ -101,7 +101,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
             <textarea
               rows={3}
               placeholder="What makes this snack special?"
-              className="w-full bg-[#FFFDF9] border border-black/10 rounded-2xl p-4 text-sm outline-none focus:border-[#C04A33] resize-none transition-colors"
+              className="w-full bg-white border border-[#DED7E4] rounded-2xl p-4 text-sm outline-none focus:border-[#FF6B35] resize-none transition-colors"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             ></textarea>
@@ -111,7 +111,7 @@ export const SubmitProductModal: React.FC<SubmitProductModalProps> = ({ onClose,
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#1F1C18] text-white py-4 rounded-2xl font-bold hover:bg-black transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full bg-[#FFC857] text-[#24212A] py-4 rounded-2xl font-bold hover:bg-[#FFD54F] transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 text-base"
             >
               {isSubmitting ? (
                 <>

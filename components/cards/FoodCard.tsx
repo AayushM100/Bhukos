@@ -20,7 +20,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRatin
   return (
     <div
       onClick={onClick}
-      className={`group relative w-full max-w-[280px] flex flex-col gap-4 p-4 rounded-[20px] bg-white border border-[#DED7E4] hover:border-[#FF6B35]/40 hover:shadow-[0_12px_32px_-4px_rgba(255,107,53,0.12),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer ${
+      className={`group relative w-full max-w-[280px] flex flex-col gap-4 p-4 rounded-[20px] bg-white border border-[#DED7E4] hover:border-[#FF6B35] hover:shadow-[0_12px_32px_-4px_rgba(255,107,53,0.12),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer ${
         isLegendary ? 'foil-glow' : ''
       }`}
     >

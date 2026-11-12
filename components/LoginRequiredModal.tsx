@@ -11,7 +11,7 @@ interface LoginRequiredModalProps {
 export const LoginRequiredModal: React.FC<LoginRequiredModalProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-[#FAF6EE] border border-black/10 rounded-[32px] max-w-md w-full p-8 shadow-2xl relative text-center space-y-6">
+      <div className="bg-[#FFF9F0] border border-[#DED7E4] rounded-[32px] max-w-md w-full p-8 shadow-2xl relative text-center space-y-6">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors"
@@ -19,13 +19,13 @@ export const LoginRequiredModal: React.FC<LoginRequiredModalProps> = ({ onClose 
           <X className="w-5 h-5" />
         </button>
 
-        <div className="w-16 h-16 bg-[#C04A33]/10 text-[#C04A33] rounded-full flex items-center justify-center mx-auto mb-2">
+        <div className="w-16 h-16 bg-[#FFC857]/15 text-[#FFC857] rounded-full flex items-center justify-center mx-auto mb-2">
           <Sparkles className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
-          <h3 className="serif-heading text-3xl font-bold">Your food journey starts here!</h3>
-          <p className="text-sm opacity-70 leading-relaxed px-2">
+          <h3 className="text-display text-3xl font-bold">Your food journey starts here!</h3>
+          <p className="text-sm text-[#6B6675] leading-relaxed px-2">
             Sign in to log your favourite snacks, rate products, build your collection and save flavours to your wishlist.
           </p>
         </div>
@@ -33,7 +33,7 @@ export const LoginRequiredModal: React.FC<LoginRequiredModalProps> = ({ onClose 
         <div className="space-y-3 pt-2">
           <button
             onClick={() => signInWithGoogle()}
-            className="w-full bg-[#1F1C18] text-white py-4 rounded-2xl font-bold hover:bg-black transition-all shadow-lg flex items-center justify-center gap-3"
+            className="w-full bg-[#24212A] text-white py-4 rounded-2xl font-bold hover:bg-[#FF6B35] transition-all shadow-lg flex items-center justify-center gap-3"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -58,7 +58,7 @@ export const LoginRequiredModal: React.FC<LoginRequiredModalProps> = ({ onClose 
 
           <button
             onClick={onClose}
-            className="w-full bg-transparent text-black/60 py-3 rounded-2xl font-bold hover:text-black hover:bg-black/5 transition-colors text-sm"
+            className="w-full bg-transparent text-[#6B6675]/60 py-3 rounded-2xl font-bold hover:text-[#24212A] hover:bg-[#FEF7FF] transition-colors text-sm"
           >
             Maybe later
           </button>
