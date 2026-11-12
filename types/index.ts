@@ -26,7 +26,7 @@ export interface FoodLog {
   id: string;
   user_id: string;
   food_item_id: string;
-  rating: number; // 1 to 5 stars
+  rating: number; // 1 to 5 stars (mapped from 1-10 DB)
   review?: string;
   created_at: string;
 }
@@ -51,4 +51,23 @@ export interface Trivia {
   fact: string;
   source?: string;
   active_date: string;
+}
+
+export interface ProductSubmission {
+  id: string;
+  submitted_by: string;
+  name: string;
+  brand: string;
+  category: string;
+  description: string;
+  image_url: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  admin_notes?: string;
+  created_at: string;
+}
+
+export interface ContributorBadge {
+  id: string;
+  user_id: string;
+  awarded_at: string;
 }

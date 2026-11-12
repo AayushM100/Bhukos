@@ -1,5 +1,5 @@
 import { createClient } from './supabase-browser';
-import { FoodItem, FoodLog, Wishlist, Trivia, Profile } from '../types';
+import { FoodItem, FoodLog, Wishlist, Trivia, Profile, ProductSubmission } from '../types';
 import { mockFoodItems } from '../data/mockFoods';
 
 /**
@@ -120,6 +120,7 @@ export async function logFoodTaste(params: {
   foodItemId: string;
   rating: number; // 0.5 - 5.0
   review?: string;
+  consumedAt?: string;
   existingLogId?: string;
 }): Promise<FoodLog | null> {
   const supabase = createClient();
@@ -131,6 +132,7 @@ export async function logFoodTaste(params: {
       .update({
         rating: ratingScale,
         review: params.review,
+        created_at: params.consumedAt || undefined,
       })
       .eq('id', params.existingLogId)
       .eq('user_id', params.userId)
@@ -152,6 +154,7 @@ export async function logFoodTaste(params: {
         food_item_id: params.foodItemId,
         rating: ratingScale,
         review: params.review,
+        created_at: params.consumedAt || new Date().toISOString(),
       },
     ])
     .select()
@@ -211,6 +214,24 @@ export async function toggleWishlist(userId: string, foodItemId: string): Promis
     await supabase.from('wishlist').insert([{ user_id: userId, food_item_id: foodItemId }]);
     return true;
   }
+}
+
+/**
+ * Submit a new food item
+ */
+export async function submitNewFood(submission: Omit<ProductSubmission, 'id' | 'status' | 'created_at'>): Promise<ProductSubmission | null> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('product_submissions')
+    .insert([submission])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error submitting product:', error);
+    return null;
+  }
+  return data as ProductSubmission;
 }
 
 /**

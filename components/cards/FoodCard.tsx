@@ -1,156 +1,85 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Star, Sparkles, Flame, Bookmark, Check } from 'lucide-react';
-import { FoodItem } from '../../types';
+import React from 'react';
+import { Star, Sparkles, Plus } from 'lucide-react';
+import { FoodItem, Rarity } from '../../types';
 import { VibrantFoodPoster } from './VibrantFoodPoster';
 
 interface FoodCardProps {
   food: FoodItem;
-  onLog?: (rating: number) => void;
-  onWishlist?: () => void;
   onClick?: () => void;
+  showUserRating?: number;
+  consumedDate?: string;
 }
 
-const rarityColors = {
-  Common: 'border-slate-300 bg-[#FFFDF9]',
-  Rare: 'border-blue-400 bg-[#FFFDF9]',
-  Epic: 'border-purple-400 bg-[#FFFDF9]',
-  Legendary: 'border-amber-400 bg-[#FFFDF9] shadow-[0_0_25px_rgba(251,191,36,0.3)]',
+const rarityStyles: Record<Rarity, { border: string; bg: string; text: string; shadow?: string }> = {
+  Common: { border: 'border-slate-200', bg: 'bg-slate-50', text: 'text-slate-600' },
+  Rare: { border: 'border-blue-200', bg: 'bg-blue-50', text: 'text-blue-600' },
+  Epic: { border: 'border-purple-200', bg: 'bg-purple-50', text: 'text-purple-600' },
+  Legendary: { border: 'border-amber-200', bg: 'bg-amber-50', text: 'text-amber-600', shadow: 'shadow-[0_0_20px_rgba(251,191,36,0.2)]' },
 };
 
-export const FoodCard: React.FC<FoodCardProps> = ({ food, onLog, onWishlist, onClick }) => {
-  const [rating, setRating] = useState<number>(0);
-  const [hoverRating, setHoverRating] = useState<number>(0);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [isWishlisted, setIsWishlisted] = useState<boolean>(false);
-
-  // rating is 0.5 to 5.0 (step 0.5)
-  const handleStarClick = (starIndex: number, isHalf: boolean) => {
-    const val = isHalf ? starIndex - 0.5 : starIndex;
-    setRating(val);
-    setIsLogged(true);
-    if (onLog) onLog(val);
-  };
-
-  const handleWishlist = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsWishlisted(!isWishlisted);
-    if (onWishlist) onWishlist();
-  };
+export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRating, consumedDate }) => {
+  const style = rarityStyles[food.rarity] || rarityStyles.Common;
 
   return (
     <div
       onClick={onClick}
-      className={`relative w-80 rounded-3xl overflow-hidden border-2 ${rarityColors[food.rarity]} shadow-xl flex flex-col justify-between p-6 cursor-pointer hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group`}
+      className="group relative w-full max-w-[280px] flex flex-col gap-4 p-4 rounded-[2rem] bg-white border border-black/5 hover:border-black/10 hover:shadow-xl transition-all duration-300 cursor-pointer"
     >
-      {/* Top Banner: Brand and Rarity */}
-      <div className="flex justify-between items-center z-10 mb-4">
-        <span className="text-xs uppercase tracking-wider font-extrabold bg-black/5 px-3 py-1 rounded-full text-[#1F1C18]">
-          {food.brand}
-        </span>
-        <div className="flex items-center gap-1 bg-black/5 px-3 py-1 rounded-full text-xs font-bold text-[#C04A33]">
-          <Sparkles className="w-3.5 h-3.5 text-[#E5A93C]" />
-          <span>{food.rarity}</span>
+      {/* Product Image/Poster */}
+      <div className="relative aspect-[3/4] w-full rounded-[1.5rem] overflow-hidden shadow-sm border border-black/5 group-hover:shadow-md transition-shadow">
+        <VibrantFoodPoster foodId={food.id} className="w-full h-full object-cover" />
+
+        {/* Rarity Badge Overlay */}
+        <div className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border ${style.bg}/80 ${style.border} ${style.text} ${style.shadow}`}>
+          <Sparkles className="w-3 h-3" />
+          {food.rarity}
         </div>
-      </div>
 
-      {/* Vibrant Vector Poster */}
-      <div className="relative h-60 w-full rounded-2xl overflow-hidden shadow-inner border border-black/10 my-1">
-        <VibrantFoodPoster foodId={food.id} className="w-full h-full" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3 pointer-events-none">
-          <p className="text-xs italic text-white/90 line-clamp-1 font-serif">"{food.quote}"</p>
-        </div>
-      </div>
-
-      {/* Title & Description */}
-      <div className="z-10 mt-4 flex-1">
-        <h3 className="serif-heading font-bold text-xl leading-snug text-[#1F1C18] line-clamp-1 group-hover:text-[#C04A33] transition-colors">{food.name}</h3>
-        <p className="text-xs text-[#1F1C18]/70 mt-1.5 line-clamp-2 leading-relaxed">{food.description}</p>
-      </div>
-
-      {/* Flavors Badge */}
-      {food.flavors && food.flavors.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 my-3.5 z-10">
-          {food.flavors.map((flavor, index) => (
-            <span
-              key={index}
-              className="text-[10px] bg-black/5 text-[#1F1C18] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider"
-            >
-              {flavor}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Interactive Section: Half-Star Rating & Actions */}
-      <div className="mt-2 pt-4 border-t border-black/10 flex flex-col gap-3 z-10" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between items-center">
-          <span className="text-xs font-bold text-[#1F1C18]/80">
-            {isLogged ? `Rating: ${rating} ★` : 'Rate Experience'}
-          </span>
-          <div className="flex gap-1 relative">
-            {[1, 2, 3, 4, 5].map((star) => {
-              const activeVal = hoverRating || rating;
-              const isFull = activeVal >= star;
-              const isHalf = activeVal === star - 0.5;
-
-              return (
-                <div key={star} className="relative w-4 h-4 cursor-pointer">
-                  {/* Left half clickable */}
-                  <div
-                    className="absolute inset-y-0 left-0 w-1/2 z-20"
-                    onMouseEnter={() => setHoverRating(star - 0.5)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    onClick={() => handleStarClick(star, true)}
-                  />
-                  {/* Right half clickable */}
-                  <div
-                    className="absolute inset-y-0 right-0 w-1/2 z-20"
-                    onMouseEnter={() => setHoverRating(star)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    onClick={() => handleStarClick(star, false)}
-                  />
-
-                  {/* Star Graphic */}
-                  <Star
-                    className={`w-4 h-4 transition-transform ${
-                      isFull
-                        ? 'fill-amber-400 text-amber-400'
-                        : isHalf
-                        ? 'fill-amber-400/50 text-amber-400'
-                        : 'text-black/20'
-                    }`}
-                  />
-                </div>
-              );
-            })}
+        {/* User Rating Overlay (if provided, for Collection) */}
+        {showUserRating !== undefined && (
+          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl flex items-center gap-1.5 border border-white/10">
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span className="text-xs font-bold">{showUserRating.toFixed(1)}</span>
           </div>
+        )}
+      </div>
+
+      {/* Product Information */}
+      <div className="flex flex-col gap-1.5 px-1">
+        <div className="flex justify-between items-start">
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#C04A33] opacity-80">
+            {food.brand}
+          </span>
+          {consumedDate && (
+            <span className="text-[10px] font-medium opacity-40">
+              {new Date(consumedDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+            </span>
+          )}
         </div>
 
-        {/* Buttons for Log Status & Wishlist */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => handleStarClick(5, false)}
-            className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm ${
-              isLogged
-                ? 'bg-emerald-600 text-white'
-                : 'bg-[#C04A33] text-white hover:bg-[#a93e28]'
-            }`}
-          >
-            {isLogged ? <Check className="w-3.5 h-3.5" /> : <Flame className="w-3.5 h-3.5 text-yellow-300" />}
-            {isLogged ? 'Logged' : 'Log It'}
-          </button>
+        <h3 className="serif-heading font-bold text-xl leading-tight text-[#1F1C18] group-hover:text-[#C04A33] transition-colors line-clamp-1">
+          {food.name}
+        </h3>
 
-          <button
-            onClick={handleWishlist}
-            className={`p-2.5 rounded-xl border border-black/10 transition-colors ${
-              isWishlisted ? 'bg-amber-400 text-black border-transparent' : 'bg-black/5 text-[#1F1C18] hover:bg-black/10'
-            }`}
-          >
-            <Bookmark className="w-4 h-4" />
-          </button>
-        </div>
+        <span className="text-[10px] font-semibold text-black/40 uppercase tracking-wider">
+          {food.category}
+        </span>
+
+        <p className="text-xs text-black/60 line-clamp-2 leading-relaxed mt-1">
+          {food.description}
+        </p>
+
+        {food.flavors && food.flavors.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {food.flavors.slice(0, 2).map((flavor) => (
+              <span key={flavor} className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-black/5 text-black/50 uppercase tracking-tighter">
+                {flavor}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
