@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Star, Calendar } from 'lucide-react';
 import { FoodItem } from '@/types';
 
@@ -9,7 +9,11 @@ export default function LogTastePage() {
   const [selectedProduct, setSelectedProduct] = useState<FoodItem | null>(null);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [consumedDate, setConsumedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [consumedDate, setConsumedDate] = useState('');
+
+  useEffect(() => {
+    setConsumedDate(new Date().toISOString().split('T')[0]);
+  }, []);
   const [review, setReview] = useState('');
 
   return (
