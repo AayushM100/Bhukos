@@ -7,43 +7,73 @@ export interface RarityStyle {
   border: string;
   glow?: string;
   gradient?: string;
+  accent?: string;
+  shadow?: string;
 }
 
-// design.md §2 — Rarity Tier Colors
+// design.md §3 — Rarity Tier Colors (integrated into top right of collectible cards)
 export const RARITY_STYLES: Record<Rarity, RarityStyle> = {
   Common: {
-    label: 'Common',
-    color: '#71717A',
-    bg: 'rgba(113, 113, 122, 0.14)',
-    border: 'rgba(113, 113, 122, 0.35)',
+    label: 'COMMON',
+    color: '#E2D8D3',
+    bg: 'rgba(255, 255, 255, 0.15)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
   },
   Rare: {
-    label: 'Rare',
-    color: '#06B6D4',
-    bg: 'rgba(6, 182, 212, 0.16)',
-    border: 'rgba(6, 182, 212, 0.4)',
-    glow: '0 0 18px rgba(6, 182, 212, 0.25)',
+    label: 'RARE',
+    color: '#FAD59A',
+    bg: 'rgba(217, 130, 43, 0.2)',
+    border: '1px solid rgba(217, 130, 43, 0.5)',
+    glow: '0 0 12px rgba(217, 130, 43, 0.35)',
+    accent: '#D9822B',
   },
   Epic: {
-    label: 'Epic',
-    color: '#8338EC',
-    bg: 'rgba(131, 56, 236, 0.18)',
-    border: 'rgba(131, 56, 236, 0.45)',
-    glow: '0 0 20px rgba(131, 56, 236, 0.3)',
-    gradient: 'linear-gradient(135deg, #8338EC, #D946EF)',
+    label: 'EPIC',
+    color: '#E8BAFF',
+    bg: 'rgba(138, 58, 185, 0.25)',
+    border: '1px solid rgba(179, 102, 235, 0.55)',
+    accent: '#8A3AB9',
   },
   Legendary: {
-    label: 'Legendary',
-    color: '#FFB703',
-    bg: 'rgba(255, 183, 3, 0.18)',
-    border: 'rgba(255, 183, 3, 0.55)',
-    glow: '0 0 26px rgba(255, 183, 3, 0.45)',
-    gradient:
-      'linear-gradient(120deg, #FFB703 0%, #FF8C42 30%, #FFD54F 55%, #FFF4E0 80%, #FFB703 100%)',
+    label: 'LEGENDARY',
+    color: '#FFE299',
+    bg: 'linear-gradient(135deg, rgba(212, 163, 71, 0.35) 0%, rgba(200, 56, 29, 0.3) 100%)',
+    border: '1px solid #D4A347',
+    glow: '0 0 12px rgba(212, 163, 71, 0.35)',
+    shadow: '0 0 12px rgba(212, 163, 71, 0.35)',
   },
 };
 
+// Utility class for rarity badges
 export const rarityBadgeClass = (rarity: Rarity): string => {
   const s = RARITY_STYLES[rarity] || RARITY_STYLES.Common;
-  return `text-[10px] font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full backdrop-blur-md border`;
+  return `text-rarity font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border`;
+};
+
+// Get the appropriate CSS class for a rarity badge
+export function rarityBadgeStyle(rarity: Rarity): string {
+  const s = RARITY_STYLES[rarity] || RARITY_STYLES.Common;
+
+  if (rarity === 'Legendary') {
+    return `bg-legendary-badgegradient text-legendary-text border-legendary-border text-xs font-bold uppercase tracking-[0.1em] px-3 py-1 rounded-full`;
+  }
+
+  if (rarity === 'Epic') {
+    return `bg-epic-bg text-epic-text border-epic-border text-xs font-bold uppercase tracking-[0.1em] px-3 py-1 rounded-full`;
+  }
+
+  if (rarity === 'Rare') {
+    return `bg-rare-bg text-rare-text border-rare-border text-xs font-bold uppercase tracking-[0.1em] px-3 py-1 rounded-full`;
+  }
+
+  // Common
+  return `bg-common-bg text-common-text border-common-border text-xs font-bold uppercase tracking-[0.1em] px-3 py-1 rounded-full`;
+};
+
+// New style definitions based on design.md colors
+export const RARITY_BADGE_STYLES = {
+  Common: 'bg-[rgba(255,255,255,0.15)] text-[#E2D8D3] border-[1px solid rgba(255,255,255,0.2)]',
+  Rare: 'bg-[rgba(217,130,43,0.2)] text-[#FAD59A] border-[1px solid rgba(217,130,43,0.5)]',
+  Epic: 'bg-[rgba(138,58,185,0.25)] text-[#E8BAFF] border-[1px solid rgba(179,102,235,0.55)]',
+  Legendary: 'bg-[linear-gradient(135deg,rgba(212,163,71,0.35)_0%,rgba(200,56,29,0.3)_100%)] text-[#FFE299] border-[1px_solid_#D4A347] shadow-[0_0_12px_rgba(212,163,71,0.35)]',
 };

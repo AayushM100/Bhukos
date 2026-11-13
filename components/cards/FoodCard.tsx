@@ -1,27 +1,40 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Star, Sparkles, Gem } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star } from 'lucide-react';
 import { FoodItem } from '../../types';
 import { VibrantFoodPoster } from './VibrantFoodPoster';
-import { RARITY_STYLES } from '../../lib/rarity';
+import { RARITY_BADGE_STYLES, RARITY_STYLES } from '../../lib/rarity';
 
 interface FoodCardProps {
   food: FoodItem;
   onClick?: () => void;
   showUserRating?: number;
   consumedDate?: string;
+  isSelected?: boolean;
+  onSelect?: () => void;
 }
 
-export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRating, consumedDate }) => {
-  const style = RARITY_STYLES[food.rarity] || RARITY_STYLES.Common;
+// design.md §11.A — Collectible Pantry Snack Cards with Rarity Badges
+export const FoodCard: React.FC<FoodCardProps> = ({
+  food,
+  onClick,
+  showUserRating,
+  consumedDate,
+  isSelected = false,
+  onSelect
+}) => {
+  const rarityStyle = RARITY_STYLES[food.rarity] || RARITY_STYLES.Common;
+  const badgeStyle = RARITY_BADGE_STYLES[food.rarity] || RARITY_BADGE_STYLES.Common;
   const isLegendary = food.rarity === 'Legendary';
+  const isEpic = food.rarity === 'Epic';
 
   return (
     <div
       onClick={onClick}
-      className={`group relative w-full max-w-[280px] flex flex-col gap-4 p-4 rounded-[20px] bg-white border border-[#DED7E4] hover:border-[#FF6B35] hover:shadow-[0_12px_32px_-4px_rgba(255,107,53,0.12),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer ${
-        isLegendary ? 'foil-glow' : ''
+      onSelect={onSelect}
+      className={`group relative w-full max-w-[280px] flex flex-col gap-4 p-4 md:p-5 rounded-[20px] bg-surface-low border border-ledger-nav hover:border-terra hover:shadow-[0_12px_32px_-4px_rgba(255,107,53,0.12),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer ${
+        isLegendary ? 'shadow-[0_0_12px_rgba(212,163,71,0.35)]' : ''
       }`}
     >
       {/* Product Image/Poster — 3:4 trading-card format */}
@@ -32,16 +45,16 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRatin
       >
         <VibrantFoodPoster foodId={food.id} className="w-full h-full object-cover" />
 
-        {/* Rarity Badge Overlay — frosted glass pill */}
+        {/* Rarity Badge Overlay — design.md §11.A top right */}
         <div
-          className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border"
-          style={{ color: style.color, background: style.bg, borderColor: style.border }}
+          className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border text-xs"
+          style={{
+            color: rarityStyle.color,
+            background: rarityStyle.bg,
+            borderColor: rarityStyle.border,
+            ...(rarityStyle.glow && { boxShadow: rarityStyle.glow })
+          }}
         >
-          {food.rarity === 'Legendary' ? (
-            <Gem className="w-3 h-3" />
-          ) : (
-            <Sparkles className="w-3 h-3" />
-          )}
           {food.rarity}
         </div>
 
@@ -57,25 +70,25 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRatin
       {/* Product Information */}
       <div className="flex flex-col gap-1.5 px-1">
         <div className="flex justify-between items-start">
-          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#FF6B35]">
+          <Meta className="text-terra">
             {food.brand}
-          </span>
+          </Meta>
           {consumedDate && (
-            <span className="text-[10px] font-medium text-[#6B6675]">
+            <DateDisplay className="text-xs">
               {new Date(consumedDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-            </span>
+            </DateDisplay>
           )}
         </div>
 
-        <h3 className="text-display font-bold text-xl leading-tight text-[#24212A] group-hover:text-[#FF6B35] transition-colors line-clamp-1">
+        <h3 className="text-display font-bold text-xl leading-tight text-ink group-hover:text-terra transition-colors line-clamp-1">
           {food.name}
         </h3>
 
-        <span className="text-[10px] font-semibold text-[#6B6675] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-[#5E544E] uppercase tracking-wider">
           {food.category}
         </span>
 
-        <p className="text-xs text-[#6B6675] line-clamp-2 leading-relaxed mt-1">
+        <p className="text-xs text-[#5E544E] line-clamp-2 leading-relaxed mt-1">
           {food.description}
         </p>
 
@@ -84,7 +97,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRatin
             {food.flavors.slice(0, 2).map((flavor) => (
               <span
                 key={flavor}
-                className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-[#FF6B35]/10 text-[#FF6B35] uppercase tracking-tighter"
+                className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-[#FFC857]/10 text-[#FF6B35] uppercase tracking-tighter"
               >
                 {flavor}
               </span>
@@ -95,3 +108,6 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food, onClick, showUserRatin
     </div>
   );
 };
+
+// Import Typography components
+import { Meta, DateDisplay } from '../ui/Typography';
